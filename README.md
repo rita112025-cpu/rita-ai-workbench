@@ -48,7 +48,7 @@ https://api.github.com/repos/rita112025-cpu/{repo-name}
 ## 第一版包含工具 (19 個)
 
 常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck
-Codex 工具：codex-skills-hub, local-workspace-mcp
+Codex 工具：codex-skills-hub, local-workspace-mcp（upstream：arumwu/local-workspace-mcp，Alpha／研究中）
 Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly
 工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner
 工程 / 報價：taiwan-construction-quote-tools (實際 repo: construction-quote-tools), tw-construction-quote-parser, boq-quote-cleaner

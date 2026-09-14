@@ -197,6 +197,7 @@ body{
 .status-常用{background:color-mix(in srgb, var(--success) 14%, var(--card));color:var(--success);border-color:color-mix(in srgb, var(--success) 30%, transparent)}
 .status-可用{background:var(--bg);color:var(--text2);border-color:var(--border)}
 .status-整理中{background:color-mix(in srgb, var(--warning) 14%, var(--card));color:var(--warning);border-color:color-mix(in srgb, var(--warning) 30%, transparent)}
+.status-研究中{background:color-mix(in srgb, var(--warning) 14%, var(--card));color:var(--warning);border-color:color-mix(in srgb, var(--warning) 30%, transparent)}
 .card h3{font-size:15px;font-weight:700;line-height:1.35;word-break:break-all}
 .purpose{font-size:13px;font-weight:600;color:var(--text);margin-top:6px}
 .detail{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:58px}
