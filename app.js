@@ -33,16 +33,20 @@ let activeCategory = "全部";
 let activeGithubStatus = "全部狀態";
 const CACHE_KEY = "rita-github-cache";
 const CACHE_TTL = 15*60*1000;
+const CACHE_CLOCK_SKEW = 60*1000;
+const FUTURE_TIME_TOLERANCE = 24*60*60*1000;
+const ISO_TIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z$/;
 const githubDataMap = new Map();
 function getSystemTheme(){return window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}
+function getSavedTheme(){try{const saved=localStorage.getItem("rita-theme");return saved==="dark"||saved==="light"?saved:null;}catch{return null;}}
 function applyTheme(theme,save){
   document.documentElement.setAttribute("data-theme",theme);
-  if(save){localStorage.setItem("rita-theme",theme);}
+  if(save){try{localStorage.setItem("rita-theme",theme);}catch{}}
   const textEl = themeToggle?.querySelector(".toggle-text");
   if(textEl) textEl.textContent = theme==="dark"?"暗色":"淺色";
 }
 function initTheme(){
-  const saved = localStorage.getItem("rita-theme");
+  const saved = getSavedTheme();
   if(saved){applyTheme(saved,true);}else{applyTheme(getSystemTheme(),false);}
   themeToggle?.addEventListener("click",()=>{
     const cur = document.documentElement.getAttribute("data-theme")||"light";
@@ -50,13 +54,50 @@ function initTheme(){
     applyTheme(next,true);
   });
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",(e)=>{
-    if(!localStorage.getItem("rita-theme")){
+    if(!getSavedTheme()){
       applyTheme(e.matches?"dark":"light",false);
     }
   });
 }
-function loadCache(){try{const raw=localStorage.getItem(CACHE_KEY);return raw?JSON.parse(raw):{};}catch{return {};}}
+// localStorage 與 GitHub API 回應都是不可信輸入：驗證後才使用，畫面一律用 DOM API 寫入
+function loadCache(){try{const raw=localStorage.getItem(CACHE_KEY);const cache=raw?JSON.parse(raw):{};return cache&&typeof cache==="object"&&!Array.isArray(cache)?cache:{};}catch{return {};}}
 function saveCache(cache){try{localStorage.setItem(CACHE_KEY,JSON.stringify(cache));}catch{}}
+function parseTime(value,now){
+  if(typeof value!=="string"||!ISO_TIME_PATTERN.test(value)) return null;
+  const time=Date.parse(value);
+  if(!Number.isFinite(time)||time>now+FUTURE_TIME_TOLERANCE) return null;
+  const iso=new Date(time).toISOString();
+  return iso.slice(0,19)===value.slice(0,19)?iso:null;
+}
+function parseCount(value){
+  if(typeof value==="string"&&!/^\d+$/.test(value)) return null;
+  if(typeof value!=="number"&&typeof value!=="string") return null;
+  const count=Number(value);
+  return Number.isFinite(count)&&Number.isInteger(count)&&count>=0&&count<=Number.MAX_SAFE_INTEGER?count:null;
+}
+function normalizeRepoData(raw,now){
+  if(!raw||typeof raw!=="object") return null;
+  const pushed_at=parseTime(raw.pushed_at,now);
+  const open_issues_count=parseCount(raw.open_issues_count);
+  if(!pushed_at||open_issues_count===null) return null;
+  return {
+    name:typeof raw.name==="string"?raw.name:null,
+    html_url:typeof raw.html_url==="string"?raw.html_url:null,
+    description:typeof raw.description==="string"?raw.description:null,
+    updated_at:parseTime(raw.updated_at,now),pushed_at,
+    open_issues_count,
+    stargazers_count:parseCount(raw.stargazers_count)??0,forks_count:parseCount(raw.forks_count)??0,
+    archived:raw.archived===true,disabled:raw.disabled===true,
+    error:false
+  };
+}
+function readCachedRepo(cache,repoKey,now){
+  const entry=cache[repoKey];
+  if(!entry||typeof entry!=="object"||typeof entry.timestamp!=="number"||!Number.isFinite(entry.timestamp)) return null;
+  const age=now-entry.timestamp;
+  if(age<-CACHE_CLOCK_SKEW||age>=CACHE_TTL) return null;
+  return normalizeRepoData(entry.data,now);
+}
 function getRepoActivityStatus(pushedAt){
   if(!pushedAt) return "無法讀取";
   const diffDays = Math.floor((Date.now()-new Date(pushedAt))/(1000*60*60*24));
@@ -64,37 +105,38 @@ function getRepoActivityStatus(pushedAt){
   if(diffDays<=180) return "穩定";
   return "久未更新";
 }
+function getGithubActivity(gh){
+  if(!gh||gh.loading) return "";
+  if(gh.error) return "無法讀取";
+  return getRepoActivityStatus(gh.pushed_at);
+}
 function formatDate(dateStr){if(!dateStr) return "-";try{return new Date(dateStr).toISOString().split("T")[0];}catch{return "-";}}
 async function fetchRepoStatus(tool){
   const repoKey = `${tool.owner}/${tool.repo}`;
-  const cache = loadCache();
   const now = Date.now();
-  if(cache[repoKey] && (now-cache[repoKey].timestamp<CACHE_TTL)){githubDataMap.set(tool.repo,cache[repoKey].data);return cache[repoKey].data;}
+  const cached = readCachedRepo(loadCache(),repoKey,now);
+  if(cached){githubDataMap.set(tool.repo,cached);return cached;}
   try{
     const url = `https://api.github.com/repos/${tool.owner}/${tool.repo}`;
     const res = await fetch(url,{headers:{"Accept":"application/vnd.github.v3+json"}});
     if(!res.ok){
-      const data={error:true,status:res.status,activityStatus:"無法讀取",repoKey};
+      const data={error:true,status:res.status,repoKey};
       githubDataMap.set(tool.repo,data);
       return data;
     }
-    const json = await res.json();
-    const activityStatus = getRepoActivityStatus(json.pushed_at);
-    const data={
-      name:json.name,html_url:json.html_url,description:json.description,
-      updated_at:json.updated_at,pushed_at:json.pushed_at,
-      open_issues_count:json.open_issues_count,
-      stargazers_count:json.stargazers_count,forks_count:json.forks_count,
-      archived:json.archived,disabled:json.disabled,
-      activityStatus,error:false
-    };
+    const data = normalizeRepoData(await res.json(),now);
+    if(!data){
+      const invalid={error:true,status:res.status,repoKey};
+      githubDataMap.set(tool.repo,invalid);
+      return invalid;
+    }
     githubDataMap.set(tool.repo,data);
     const latest=loadCache();
     latest[repoKey]={data,timestamp:now};
     saveCache(latest);
     return data;
   }catch(e){
-    const data={error:true,activityStatus:"無法讀取",repoKey,message:e.message};
+    const data={error:true,repoKey,message:e.message};
     githubDataMap.set(tool.repo,data);
     return data;
   }
@@ -118,39 +160,42 @@ async function fetchAllStatuses(){
   }));
   await Promise.allSettled(promises);
 }
+function el(tag,className,text){
+  const node=document.createElement(tag);
+  if(className) node.className=className;
+  if(text!==undefined) node.textContent=String(text);
+  return node;
+}
 function renderStats(){
   const counts={};
   categories.forEach(c=>counts[c]=tools.filter(t=>t.category===c).length);
-  statsRow.innerHTML=categories.map(c=>`
-    <div class="stat-item"><div class="label">${c}</div><div class="value">${counts[c]}</div></div>
-  `).join("")+`<div class="stat-item stat-total"><div class="label">總工具數</div><div class="value">${tools.length}</div></div>`;
+  const statItem=(label,value,className)=>{
+    const item=el("div",className);
+    item.append(el("div","label",label),el("div","value",value));
+    return item;
+  };
+  statsRow.replaceChildren(...categories.map(c=>statItem(c,counts[c],"stat-item")),statItem("總工具數",tools.length,"stat-item stat-total"));
+}
+function createFilterButton(label,active,dataKey,onClick){
+  const btn=el("button",active?"filter-btn active":"filter-btn",label);
+  btn.dataset[dataKey]=label;
+  btn.addEventListener("click",onClick);
+  return btn;
 }
 function renderFilters(){
   const allCats=["全部",...categories];
-  filterRow.innerHTML=allCats.map(c=>{
-    const active=c===activeCategory?"active":"";
-    return `<button class="filter-btn ${active}" data-cat="${c}">${c}</button>`;
-  }).join("");
-  filterRow.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      activeCategory=btn.dataset.cat;
-      renderFilters();
-      renderTools();
-    });
-  });
+  filterRow.replaceChildren(...allCats.map(c=>createFilterButton(c,c===activeCategory,"cat",()=>{
+    activeCategory=c;
+    renderFilters();
+    renderTools();
+  })));
 }
 function renderGithubFilters(){
-  githubFilterRow.innerHTML=githubStatusOptions.map(s=>{
-    const active=s===activeGithubStatus?"active":"";
-    return `<button class="filter-btn ${active}" data-gh="${s}">${s}</button>`;
-  }).join("");
-  githubFilterRow.querySelectorAll(".filter-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      activeGithubStatus=btn.dataset.gh;
-      renderGithubFilters();
-      renderTools();
-    });
-  });
+  githubFilterRow.replaceChildren(...githubStatusOptions.map(s=>createFilterButton(s,s===activeGithubStatus,"gh",()=>{
+    activeGithubStatus=s;
+    renderGithubFilters();
+    renderTools();
+  })));
 }
 function getFiltered(){
   const q=searchInput.value.trim().toLowerCase();
@@ -162,42 +207,58 @@ function getFiltered(){
     if(activeGithubStatus!=="全部狀態"){
       if(!gh){matchGh=activeGithubStatus==="讀取中";}
       else if(gh.loading){matchGh=activeGithubStatus==="讀取中";}
-      else{matchGh=gh.activityStatus===activeGithubStatus;}
+      else{matchGh=getGithubActivity(gh)===activeGithubStatus;}
     }
     if(!matchGh) return false;
     if(!q) return true;
-    const hay=[t.name,t.repo,t.description,t.detail,t.tags.join(" "),t.category,gh?.activityStatus||""].join(" ").toLowerCase();
+    const hay=[t.name,t.repo,t.description,t.detail,t.tags.join(" "),t.category,getGithubActivity(gh)].join(" ").toLowerCase();
     return hay.includes(q);
   });
+}
+function createGithubLine(label,value,valueClass){
+  const line=el("div","gh-line");
+  line.append(el("span","gh-label",label),el("span",valueClass?`gh-value ${valueClass}`:"gh-value",value));
+  return line;
+}
+function createGithubStatus(t,gh){
+  if(!gh||gh.loading) return el("div","gh-status loading","讀取 GitHub 狀態中...");
+  const box=el("div","gh-status");
+  if(gh.error){
+    box.append(createGithubLine("GitHub 狀態","無法讀取","error"),createGithubLine("Repo",t.repo));
+    return box;
+  }
+  const activity=getGithubActivity(gh);
+  box.append(createGithubLine("更新狀態",activity,`activity-${activity}`),createGithubLine("最後 Push",formatDate(gh.pushed_at)),createGithubLine("Open Issues",gh.open_issues_count));
+  return box;
+}
+function createLinkButton(className,href,label){
+  const link=el("a",className,label);
+  link.href=href;
+  link.target="_blank";
+  link.rel="noopener";
+  return link;
+}
+function createToolCard(t){
+  const card=el("div","card");
+  const top=el("div","card-top");
+  top.append(el("span","card-category",t.category),el("span",`status status-${t.status}`,t.status));
+  const tags=el("div","tags");
+  tags.append(...t.tags.map(tag=>el("span","tag",tag)));
+  const actions=el("div","card-actions");
+  actions.append(createLinkButton("btn btn-github",t.github,"GitHub"));
+  if(t.demo) actions.append(createLinkButton("btn btn-demo",t.demo,"Demo"));
+  card.append(top,el("h3","",t.name),el("div","purpose",t.description),el("div","detail",t.detail),tags,createGithubStatus(t,githubDataMap.get(t.repo)),actions);
+  return card;
 }
 function renderTools(){
   const filtered=getFiltered();
   const loadedCount=githubDataMap.size;
   resultInfo.textContent=`顯示 ${filtered.length} / ${tools.length} 個工具${activeCategory!=="全部"?` · 分類：${activeCategory}`:""}${activeGithubStatus!=="全部狀態"?` · GitHub：${activeGithubStatus}`:""}${searchInput.value?` · 搜尋：${searchInput.value}`:""} ${loadedCount>0?`· 已載入 ${loadedCount}`:""}`;
   if(filtered.length===0){
-    grid.innerHTML=`<div class="empty">沒有符合條件的工具，試試其他關鍵字或分類</div>`;
+    grid.replaceChildren(el("div","empty","沒有符合條件的工具，試試其他關鍵字或分類"));
     return;
   }
-  grid.innerHTML=filtered.map(t=>{
-    const gh=githubDataMap.get(t.repo);
-    const demoBtn=t.demo?`<a class="btn btn-demo" href="${t.demo}" target="_blank" rel="noopener">Demo</a>`:"";
-    let ghHtml="";
-    if(!gh){ghHtml=`<div class="gh-status loading">讀取 GitHub 狀態中...</div>`;}
-    else if(gh.loading){ghHtml=`<div class="gh-status loading">讀取 GitHub 狀態中...</div>`;}
-    else if(gh.error){ghHtml=`<div class="gh-status"><div class="gh-line"><span class="gh-label">GitHub 狀態</span><span class="gh-value error">無法讀取</span></div><div class="gh-line"><span class="gh-label">Repo</span><span class="gh-value">${t.repo}</span></div></div>`;}
-    else{ghHtml=`<div class="gh-status"><div class="gh-line"><span class="gh-label">更新狀態</span><span class="gh-value activity-${gh.activityStatus}">${gh.activityStatus}</span></div><div class="gh-line"><span class="gh-label">最後 Push</span><span class="gh-value">${formatDate(gh.pushed_at)}</span></div><div class="gh-line"><span class="gh-label">Open Issues</span><span class="gh-value">${gh.open_issues_count??0}</span></div></div>`;}
-    return `
-    <div class="card">
-      <div class="card-top"><span class="card-category">${t.category}</span><span class="status status-${t.status}">${t.status}</span></div>
-      <h3>${t.name}</h3>
-      <div class="purpose">${t.description}</div>
-      <div class="detail">${t.detail}</div>
-      <div class="tags">${t.tags.map(tag=>`<span class="tag">${tag}</span>`).join("")}</div>
-      ${ghHtml}
-      <div class="card-actions"><a class="btn btn-github" href="${t.github}" target="_blank" rel="noopener">GitHub</a>${demoBtn}</div>
-    </div>
-    `;
-  }).join("");
+  grid.replaceChildren(...filtered.map(createToolCard));
 }
 searchInput.addEventListener("input",renderTools);
 initTheme();
