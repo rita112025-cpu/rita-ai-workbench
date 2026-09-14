@@ -1,0 +1,240 @@
+:root{
+  --bg:#F8FAFC;
+  --text:#0F172A;
+  --text2:#475569;
+  --card:#FFFFFF;
+  --primary:#2563EB;
+  --border:#E2E8F0;
+  --success:#16A34A;
+  --warning:#F59E0B;
+  --radius:12px;
+  --shadow:0 1px 3px rgba(15,23,42,.06);
+  --cat-bg:#EFF6FF;
+  --cat-border:#DBEAFE;
+  --input-focus:0 0 0 3px rgba(37,99,235,.12);
+}
+[data-theme="dark"]{
+  --bg:#020617;
+  --text:#F1F5F9;
+  --text2:#94A3B8;
+  --card:#1E293B;
+  --primary:#60A5FA;
+  --border:#334155;
+  --success:#4ADE80;
+  --warning:#FBBF24;
+  --shadow:0 1px 8px rgba(0,0,0,.4);
+  --cat-bg:#1E3A5F;
+  --cat-border:#2D4A6F;
+  --input-focus:0 0 0 3px rgba(96,165,250,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  transition:background .2s,color .2s;
+}
+.container{max-width:1120px;margin:0 auto;padding:0 16px}
+.site-header{
+  background:color-mix(in srgb, var(--card) 92%, transparent);
+  border-bottom:1px solid var(--border);
+  padding:20px 0 16px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  backdrop-filter:saturate(180%) blur(12px);
+  transition:background .2s,border-color .2s;
+}
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+}
+.header-top h1{font-size:28px;font-weight:800;letter-spacing:-0.02em;line-height:1.1}
+.subtitle{color:var(--text2);font-size:14px;margin-top:6px}
+.theme-toggle{
+  flex-shrink:0;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  height:38px;
+  padding:0 14px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+  box-shadow:var(--shadow);
+  margin-top:2px;
+}
+.theme-toggle:hover{border-color:var(--text2);transform:translateY(-1px)}
+.theme-toggle .icon-sun,.theme-toggle .icon-moon{font-size:14px;line-height:1}
+[data-theme="light"] .icon-moon{display:inline}
+[data-theme="light"] .icon-sun{display:none}
+[data-theme="dark"] .icon-sun{display:inline}
+[data-theme="dark"] .icon-moon{display:none}
+.toggle-text{min-width:28px}
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px;
+  margin-top:18px;
+}
+.stat-item{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  box-shadow:var(--shadow);
+  transition:.2s;
+}
+.stat-item.stat-total{
+  background:var(--text);
+  color:var(--bg);
+  border-color:var(--text);
+}
+[data-theme="dark"] .stat-item.stat-total{
+  background:var(--card);
+  color:var(--text);
+  border-color:var(--border);
+}
+.stat-item .label{font-size:11px;color:var(--text2);font-weight:600}
+.stat-item.stat-total .label{color:var(--text2)}
+.stat-item .value{font-size:18px;font-weight:800;margin-top:2px}
+@media(max-width:800px){
+  .stats-row{grid-template-columns:repeat(3,1fr)}
+  .header-top h1{font-size:24px}
+}
+@media(max-width:480px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .header-top{flex-direction:column}
+  .theme-toggle{align-self:flex-start}
+}
+.controls{padding:20px 0 8px}
+.search-wrap{position:relative;max-width:560px}
+.search-wrap input{
+  width:100%;
+  height:44px;
+  padding:0 44px 0 16px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--card);
+  color:var(--text);
+  font-size:15px;
+  outline:none;
+  transition:.2s;
+  box-shadow:var(--shadow);
+}
+.search-wrap input::placeholder{color:var(--text2)}
+.search-wrap input:focus{border-color:var(--primary);box-shadow:var(--input-focus)}
+.search-icon{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--text2);font-size:20px;
+}
+.filter-label{
+  font-size:12px;font-weight:700;color:var(--text2);
+  margin-top:14px;margin-bottom:6px;
+  display:flex;align-items:center;gap:8px;
+}
+.filter-hint{
+  font-weight:400;font-size:11px;
+  background:var(--card);border:1px solid var(--border);
+  padding:2px 8px;border-radius:10px;
+}
+.filter-row{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.filter-btn{
+  height:32px;
+  padding:0 12px;
+  border:1px solid var(--border);
+  background:var(--card);
+  border-radius:20px;
+  font-size:12px;
+  color:var(--text2);
+  cursor:pointer;
+  transition:.15s;
+}
+.filter-btn.active{
+  background:var(--text);
+  color:var(--bg);
+  border-color:var(--text);
+}
+.filter-btn:hover{border-color:var(--text2);transform:translateY(-0.5px)}
+.result-info{font-size:13px;color:var(--text2);margin-top:12px;min-height:18px}
+.tools-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  padding:12px 0 40px;
+}
+@media(min-width:700px){.tools-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.tools-grid{grid-template-columns:repeat(3,1fr)}}
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  transition:border-color .15s, transform .15s, background .2s;
+  box-shadow:var(--shadow);
+}
+.card:hover{border-color:var(--text2);transform:translateY(-1px)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
+.card-category{font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--primary);background:var(--cat-bg);border:1px solid var(--cat-border);padding:3px 8px;border-radius:12px}
+.status{font-size:11px;font-weight:700;padding:3px 8px;border-radius:12px;border:1px solid}
+.status-常用{background:color-mix(in srgb, var(--success) 14%, var(--card));color:var(--success);border-color:color-mix(in srgb, var(--success) 30%, transparent)}
+.status-可用{background:var(--bg);color:var(--text2);border-color:var(--border)}
+.status-整理中{background:color-mix(in srgb, var(--warning) 14%, var(--card));color:var(--warning);border-color:color-mix(in srgb, var(--warning) 30%, transparent)}
+.card h3{font-size:15px;font-weight:700;line-height:1.35;word-break:break-all}
+.purpose{font-size:13px;font-weight:600;color:var(--text);margin-top:6px}
+.detail{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:58px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.tag{font-size:11px;background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:2px 7px;border-radius:6px;transition:.2s}
+.gh-status{
+  margin-top:12px;
+  padding-top:10px;
+  border-top:1px dashed var(--border);
+  font-size:12px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-height:64px;
+}
+.gh-status.loading{color:var(--text2);font-style:italic;justify-content:center}
+.gh-line{display:flex;justify-content:space-between;gap:8px}
+.gh-label{color:var(--text2);font-size:11px}
+.gh-value{font-weight:600;font-size:11px}
+.gh-value.activity-近期有更新{color:var(--success)}
+.gh-value.activity-穩定{color:var(--text)}
+.gh-value.activity-久未更新{color:var(--warning)}
+.gh-value.activity-無法讀取{color:#EF4444}
+.gh-value.error{color:#EF4444}
+.card-actions{display:flex;gap:8px;margin-top:14px}
+.btn{
+  flex:1;
+  height:36px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:8px;
+  font-size:13px;font-weight:600;
+  text-decoration:none;
+  cursor:pointer;
+  border:1px solid;
+  transition:.15s;
+}
+.btn-github{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn-github:hover{opacity:.9}
+.btn-demo{background:var(--card);color:var(--primary);border-color:var(--border)}
+.btn-demo:hover{border-color:var(--primary);background:var(--cat-bg)}
+.site-footer{border-top:1px solid var(--border);padding:28px 0;background:var(--card);color:var(--text2);font-size:13px;text-align:center;transition:.2s}
+.site-footer strong{color:var(--text);font-size:14px}
+.footer-meta{margin-top:6px;font-size:11px;opacity:.8}
+.empty{grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text2);font-size:14px;border:1px dashed var(--border);border-radius:12px;background:var(--card)}

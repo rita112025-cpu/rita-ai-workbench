@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rita AI 工作台 | Codex、Claude Code、Prompt 與工作自動化工具入口</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container">
+    <div class="header-top">
+      <div>
+        <h1>Rita AI 工作台</h1>
+        <p class="subtitle">Codex、Claude Code、Prompt 與工作自動化工具入口</p>
+      </div>
+      <button id="themeToggle" class="theme-toggle" aria-label="切換主題">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+        <span class="toggle-text">淺色</span>
+      </button>
+    </div>
+    <div class="stats-row" id="statsRow"></div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="controls">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="搜尋工具名稱、用途、標籤、更新狀態..." autocomplete="off">
+      <span class="search-icon">⌕</span>
+    </div>
+    <div class="filter-label">工具分類</div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="filter-label">GitHub 更新狀態 <span class="filter-hint" id="githubHint">讀取中...</span></div>
+    <div class="filter-row" id="githubFilterRow"></div>
+    <div class="result-info" id="resultInfo"></div>
+  </section>
+
+  <section id="toolsGrid" class="tools-grid"></section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <strong>Rita AI 工作台</strong>
+    <p>整理 Codex、Claude Code、Prompt 與工作自動化工具。公開 repo 狀態直接讀 GitHub API，無需後端。</p>
+    <p class="footer-meta">純前端 · 無需登入 · 無 token · GitHub API 快取 15 分鐘 · rita112025-cpu</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
