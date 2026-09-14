@@ -45,9 +45,9 @@ https://api.github.com/repos/rita112025-cpu/{repo-name}
 5. localStorage 快取 15 分鐘
 6. 無 token、無登入、無後端
 
-## 第一版包含工具 (20 個)
+## 第一版包含工具 (19 個)
 
-常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck, daily-report-viewer-work-prompts
+常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck
 Codex 工具：codex-skills-hub, local-workspace-mcp
 Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly
 工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner
