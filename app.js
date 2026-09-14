@@ -1,12 +1,12 @@
 const tools = [
-  {name:"PROMPT-LIBRARY",repo:"PROMPT-LIBRARY",owner:"rita112025-cpu",category:"常用 Prompt",description:"集中管理常用 Prompt。",detail:"放置可重複使用的 Prompt，例如工作分析、報告整理、程式審查、工具規劃等。",tags:["Prompt","Library","AI 工作流"],status:"常用",github:"https://github.com/rita112025-cpu/PROMPT-LIBRARY",demo:""},
-  {name:"gpt6-astra-prompts",repo:"gpt6-astra-prompts",owner:"rita112025-cpu",category:"常用 Prompt",description:"Astra / GPT-6 相關提示詞整理。",detail:"整理 GPT-6 Astra 使用場景、工具連接、工作流程與進階 Prompt。",tags:["GPT-6","Astra","Prompt"],status:"可用",github:"https://github.com/rita112025-cpu/gpt6-astra-prompts",demo:""},
-  {name:"ai-prompt-deck",repo:"ai-prompt-deck",owner:"rita112025-cpu",category:"常用 Prompt",description:"AI Prompt 簡報與教材素材。",detail:"適合整理成教學、簡報或內部分享內容。",tags:["Prompt","Deck","教材"],status:"可用",github:"https://github.com/rita112025-cpu/ai-prompt-deck",demo:""},
-    {name:"codex-skills-hub",repo:"codex-skills-hub",owner:"rita112025-cpu",category:"Codex 工具",description:"Codex Skills 入口。",detail:"整理可用的 Codex skills、使用情境、安裝與應用方向。",tags:["Codex","Skills","AI 工具"],status:"常用",github:"https://github.com/rita112025-cpu/codex-skills-hub",demo:""},
+  {name:"PROMPT-LIBRARY",repo:"PROMPT-LIBRARY",owner:"rita112025-cpu",category:"常用 Prompt",description:"集中管理常用 Prompt。",detail:"放置可重複使用的 Prompt，例如工作分析、報告整理、程式審查、工具規劃等。",tags:["Prompt","Library","AI 工作流"],status:"常用",github:"https://github.com/rita112025-cpu/PROMPT-LIBRARY",demo:"https://rita112025-cpu.github.io/PROMPT-LIBRARY/"},
+  {name:"gpt6-astra-prompts",repo:"gpt6-astra-prompts",owner:"rita112025-cpu",category:"常用 Prompt",description:"Astra / GPT-6 相關提示詞整理。",detail:"整理 GPT-6 Astra 使用場景、工具連接、工作流程與進階 Prompt。",tags:["GPT-6","Astra","Prompt"],status:"可用",github:"https://github.com/rita112025-cpu/gpt6-astra-prompts",demo:"https://rita112025-cpu.github.io/gpt6-astra-prompts/"},
+  {name:"ai-prompt-deck",repo:"ai-prompt-deck",owner:"rita112025-cpu",category:"常用 Prompt",description:"AI Prompt 簡報與教材素材。",detail:"適合整理成教學、簡報或內部分享內容。",tags:["Prompt","Deck","教材"],status:"可用",github:"https://github.com/rita112025-cpu/ai-prompt-deck",demo:"https://rita112025-cpu.github.io/ai-prompt-deck/"},
+    {name:"codex-skills-hub",repo:"codex-skills-hub",owner:"rita112025-cpu",category:"Codex 工具",description:"Codex Skills 入口。",detail:"整理可用的 Codex skills、使用情境、安裝與應用方向。",tags:["Codex","Skills","AI 工具"],status:"常用",github:"https://github.com/rita112025-cpu/codex-skills-hub",demo:"https://rita112025-cpu.github.io/codex-skills-hub/"},
   {name:"local-workspace-mcp",repo:"local-workspace-mcp",owner:"rita112025-cpu",category:"Codex 工具",description:"本機工作區 MCP 工具。",detail:"用來連接本機工作區、檔案、工具或自動化流程。",tags:["MCP","Local","Automation"],status:"整理中",github:"https://github.com/rita112025-cpu/local-workspace-mcp",demo:""},
-  {name:"claude-dual-session-prompts",repo:"claude-dual-session-prompts",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude Code 多視窗分工 Prompt。",detail:"支援不同 Claude Code 視窗分別負責讀程式、改程式、驗收、整合報告。",tags:["Claude Code","分工","Prompt"],status:"常用",github:"https://github.com/rita112025-cpu/claude-dual-session-prompts",demo:""},
-  {name:"claude-skill-deck",repo:"claude-skill-deck",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude Skill 教材與簡報。",detail:"適合整理 Claude Skills 的概念、應用方式與展示內容。",tags:["Claude","Skill","Deck"],status:"可用",github:"https://github.com/rita112025-cpu/claude-skill-deck",demo:""},
-  {name:"claude-guide-presbyopia-friendly",repo:"Claude-Guide-Presbyopia-Friendly",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude 使用指南。",detail:"整理 Claude 使用方式、分工模式與實務操作說明，適合長時間閱讀。",tags:["Claude","Guide","Workflow"],status:"可用",github:"https://github.com/rita112025-cpu/Claude-Guide-Presbyopia-Friendly",demo:""},
+  {name:"claude-dual-session-prompts",repo:"claude-dual-session-prompts",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude Code 多視窗分工 Prompt。",detail:"支援不同 Claude Code 視窗分別負責讀程式、改程式、驗收、整合報告。",tags:["Claude Code","分工","Prompt"],status:"常用",github:"https://github.com/rita112025-cpu/claude-dual-session-prompts",demo:"https://rita112025-cpu.github.io/claude-dual-session-prompts/"},
+  {name:"claude-skill-deck",repo:"claude-skill-deck",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude Skill 教材與簡報。",detail:"適合整理 Claude Skills 的概念、應用方式與展示內容。",tags:["Claude","Skill","Deck"],status:"可用",github:"https://github.com/rita112025-cpu/claude-skill-deck",demo:"https://rita112025-cpu.github.io/claude-skill-deck/"},
+  {name:"claude-guide-presbyopia-friendly",repo:"Claude-Guide-Presbyopia-Friendly",owner:"rita112025-cpu",category:"Claude Code 分工",description:"Claude 使用指南。",detail:"整理 Claude 使用方式、分工模式與實務操作說明，適合長時間閱讀。",tags:["Claude","Guide","Workflow"],status:"可用",github:"https://github.com/rita112025-cpu/Claude-Guide-Presbyopia-Friendly",demo:"https://rita112025-cpu.github.io/Claude-Guide-Presbyopia-Friendly/"},
   {name:"daily-report-viewer",repo:"daily-report-viewer",owner:"rita112025-cpu",category:"工作自動化工具",description:"日報查看器。",detail:"用於查看、整理或展示工作日報與進度資料。",tags:["日報","Viewer","工作追蹤"],status:"常用",github:"https://github.com/rita112025-cpu/daily-report-viewer",demo:"https://rita112025-cpu.github.io/daily-report-viewer/"},
   {name:"line-summary-docx",repo:"line-summary-docx",owner:"rita112025-cpu",category:"工作自動化工具",description:"LINE 對話摘要轉文件。",detail:"將 LINE 對話或文字紀錄整理成文件格式，適合做會議紀錄、工作摘要或交辦追蹤。",tags:["LINE","DOCX","摘要"],status:"可用",github:"https://github.com/rita112025-cpu/line-summary-docx",demo:""},
   {name:"subtitle_burner",repo:"subtitle_burner",owner:"rita112025-cpu",category:"工作自動化工具",description:"字幕工具。",detail:"處理字幕、逐字稿或影音文字內容，支援燒錄與格式轉換。",tags:["字幕","逐字稿","影音"],status:"可用",github:"https://github.com/rita112025-cpu/subtitle_burner",demo:""},
@@ -14,10 +14,10 @@ const tools = [
   {name:"tw-construction-quote-parser",repo:"tw-construction-quote-parser",owner:"rita112025-cpu",category:"工程 / 報價工具",description:"工程報價解析器。",detail:"解析工程報價資料，適合搭配 BOQ、標單或廠商報價整理。",tags:["工程","Parser","BOQ"],status:"可用",github:"https://github.com/rita112025-cpu/tw-construction-quote-parser",demo:""},
   {name:"boq-quote-cleaner",repo:"boq-quote-cleaner",owner:"rita112025-cpu",category:"工程 / 報價工具",description:"BOQ 報價清理工具。",detail:"清理 BOQ、報價表、材料項目與格式混亂的工程資料。",tags:["BOQ","報價","清理"],status:"常用",github:"https://github.com/rita112025-cpu/boq-quote-cleaner",demo:""},
   {name:"revit-low-voltage-learning-guide",repo:"revit-low-voltage-learning-guide",owner:"rita112025-cpu",category:"學習與資源",description:"Revit 弱電學習指南。",detail:"整理 Revit 弱電系統學習內容，適合工程與 BIM 學習，已有線上展示。",tags:["Revit","弱電","學習"],status:"常用",github:"https://github.com/rita112025-cpu/revit-low-voltage-learning-guide",demo:"https://rita112025-cpu.github.io/revit-low-voltage-learning-guide/"},
-  {name:"revit-weak-guide",repo:"revit-weak-guide",owner:"rita112025-cpu",category:"學習與資源",description:"Revit 弱電教材。",detail:"Revit 弱電相關補充教材與學習內容。",tags:["Revit","BIM","教材"],status:"可用",github:"https://github.com/rita112025-cpu/revit-weak-guide",demo:""},
+  {name:"revit-weak-guide",repo:"revit-weak-guide",owner:"rita112025-cpu",category:"學習與資源",description:"Revit 弱電教材。",detail:"Revit 弱電相關補充教材與學習內容。",tags:["Revit","BIM","教材"],status:"可用",github:"https://github.com/rita112025-cpu/revit-weak-guide",demo:"https://rita112025-cpu.github.io/revit-weak-guide/"},
   {name:"astra-3d-resource-hub",repo:"astra-3d-resource-hub",owner:"rita112025-cpu",category:"學習與資源",description:"Astra 3D 資源站。",detail:"整理 Astra、3D、AutoCAD、Revit 或相關 AI 工具資源，已有線上展示。",tags:["Astra","3D","資源"],status:"可用",github:"https://github.com/rita112025-cpu/astra-3d-resource-hub",demo:"https://rita112025-cpu.github.io/astra-3d-resource-hub/"},
   {name:"taiwan-learning-hub",repo:"taiwan-learning-hub",owner:"rita112025-cpu",category:"學習與資源",description:"台灣學習資源入口。",detail:"整理學習資源、工具、教材或技能路線。",tags:["學習","Hub","台灣"],status:"整理中",github:"https://github.com/rita112025-cpu/taiwan-learning-hub",demo:""},
-  {name:"stock-prompt-lab",repo:"stock-prompt-lab",owner:"rita112025-cpu",category:"學習與資源",description:"股票 Prompt 實驗工具。",detail:"用於股票分析 Prompt、投資研究流程與資料整理。",tags:["股票","Prompt","Research"],status:"可用",github:"https://github.com/rita112025-cpu/stock-prompt-lab",demo:""}
+  {name:"stock-prompt-lab",repo:"stock-prompt-lab",owner:"rita112025-cpu",category:"學習與資源",description:"股票 Prompt 實驗工具。",detail:"用於股票分析 Prompt、投資研究流程與資料整理。",tags:["股票","Prompt","Research"],status:"可用",github:"https://github.com/rita112025-cpu/stock-prompt-lab",demo:"https://rita112025-cpu.github.io/stock-prompt-lab/"}
 ];
 const categories = ["常用 Prompt","Codex 工具","Claude Code 分工","工作自動化工具","工程 / 報價工具","學習與資源"];
 const githubStatusOptions = ["全部狀態","近期有更新","穩定","久未更新","無法讀取","讀取中"];
@@ -69,7 +69,7 @@ async function fetchRepoStatus(tool){
   const repoKey = `${tool.owner}/${tool.repo}`;
   const cache = loadCache();
   const now = Date.now();
-  if(cache[repoKey] && (now-cache[repoKey].timestamp<CACHE_TTL)){return cache[repoKey].data;}
+  if(cache[repoKey] && (now-cache[repoKey].timestamp<CACHE_TTL)){githubDataMap.set(tool.repo,cache[repoKey].data);return cache[repoKey].data;}
   try{
     const url = `https://api.github.com/repos/${tool.owner}/${tool.repo}`;
     const res = await fetch(url,{headers:{"Accept":"application/vnd.github.v3+json"}});
@@ -89,8 +89,9 @@ async function fetchRepoStatus(tool){
       activityStatus,error:false
     };
     githubDataMap.set(tool.repo,data);
-    cache[repoKey]={data,timestamp:now};
-    saveCache(cache);
+    const latest=loadCache();
+    latest[repoKey]={data,timestamp:now};
+    saveCache(latest);
     return data;
   }catch(e){
     const data={error:true,activityStatus:"無法讀取",repoKey,message:e.message};
