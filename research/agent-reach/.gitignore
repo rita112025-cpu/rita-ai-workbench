@@ -1,0 +1,19 @@
+# Local development artifacts for the Agent Reach adapter.
+# Scoped to this sub-project so it can be merged or reverted on its own.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Never commit credentials, cookies or browser state.
+.env
+.env.*
+*.cookies
+*.cookies.json
+cookies.txt
