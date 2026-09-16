@@ -1,4 +1,4 @@
-# Scrapling public web collector
+# Scrapling parsing and adaptive extraction layer
 
 A self-contained Python package for **public web acquisition**: fetch, keep the raw
 evidence, normalize, extract. Additive: nothing under `research/scrapling/` touches the

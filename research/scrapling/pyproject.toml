@@ -1,7 +1,7 @@
 [project]
 name = "rita-scrapling-collector"
 version = "0.1.0"
-description = "Public web collector for research acquisition, built on Scrapling's parser."
+description = "Scrapling parsing and adaptive extraction layer, with a stdlib HTTP transport."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
