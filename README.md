@@ -42,20 +42,21 @@ https://api.github.com/repos/rita112025-cpu/{repo-name}
 2. 成功更新卡片
 3. 失敗顯示「無法讀取」，不中斷頁面
 4. loading「讀取 GitHub 狀態中...」
-5. localStorage 快取 15 分鐘
+5. localStorage 快取 60 分鐘（未登入 API 每小時 60 次，工具數已接近上限）
 6. 無 token、無登入、無後端
 
-## 目前收錄工具 (24 個)
+## 目前收錄工具 (43 個)
 
-常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck
-Codex 工具：codex-skills-hub, local-workspace-mcp（upstream：arumwu/local-workspace-mcp，Alpha／研究中）
-Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly, Six-Skills-Dashboard
+常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck, work-prompts, ai-web-design-cheatsheet
+Codex 工具：codex-skills-hub, local-workspace-mcp（upstream：arumwu/local-workspace-mcp，Alpha／研究中）, rita-codex-skills, vibe-coding-work-db, dsh-starter
+Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly, Six-Skills-Dashboard, i-have-adhd（fork）, fable5-agent-battle
 工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner
-AI 實驗 / Demo：zsgc-store, TradingAgents（fork，研究用）, LongCat-Avatar-Cloud
-工程 / 報價：taiwan-construction-quote-tools (實際 repo: construction-quote-tools), tw-construction-quote-parser, boq-quote-cleaner
-學習與資源：revit-low-voltage-learning-guide, revit-low-voltage-learning-guide-Literary-Edition, revit-weak-guide, astra-3d-resource-hub, taiwan-learning-hub, stock-prompt-lab
+AI 實驗 / Demo：zsgc-store, TradingAgents（fork）, LongCat-Avatar-Cloud, gods-eye-view（fork）
+工程 / 報價：taiwan-construction-quote-tools (實際 repo: construction-quote-tools), tw-construction-quote-parser, boq-quote-cleaner, mep-boq-toolkit
+學習與資源：revit-low-voltage-learning-guide, revit-low-voltage-learning-guide-Literary-Edition, revit-weak-guide, astra-3d-resource-hub, taiwan-learning-hub, stock-prompt-lab, stock_public, ai-resource-hub, fullstack-blueprint, markdown-upgrade-guide, Ssdc-Glossary-V5-Final-Unfrozen_-
+生活 / 其他：tainan-trip, tainan-trip_meta, japan_travel, japan_travel_meta, yijing
 
-**尚未放入**：fable5-agent-battle, stock, verus, tainan-trip, japan_travel, japan_travel_meta, i-have-adhd, mep-boq-toolkit, work-prompts, vibe-coding-work-db, rita-codex-skills, ai-web-design-cheatsheet, markdown-upgrade-guide, dsh-starter, fullstack-blueprint, ai-resource-hub, yijing, stock_public, gods-eye-view 等
+**未收錄**：private repo（stock, verus, ssdc-glossary, pm-tracker-v7, segreene-ai-pilot）與本站自身 rita-ai-workbench
 
 ## 本機開啟
 
