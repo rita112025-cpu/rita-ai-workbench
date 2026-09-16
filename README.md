@@ -30,20 +30,27 @@
 - 超過 180 天未 push：久未更新
 - API 讀取失敗：無法讀取
 
-API：
+API（同一帳號一次抓完，不逐一查 repo）：
 ```
-https://api.github.com/repos/rita112025-cpu/{repo-name}
+https://api.github.com/users/rita112025-cpu/repos?per_page=100&sort=pushed
+```
+
+非本帳號的 repo（例如 upstream fork 來源）才走單一查詢：
+```
+https://api.github.com/repos/{owner}/{repo-name}
 ```
 
 欄位：`name, html_url, description, updated_at, pushed_at, open_issues_count, stargazers_count, forks_count, archived, disabled`
 
 前端：
-1. 載入時呼叫 GitHub API
+1. 載入時先讀 localStorage 快取，未命中的才呼叫 API
 2. 成功更新卡片
 3. 失敗顯示「無法讀取」，不中斷頁面
 4. loading「讀取 GitHub 狀態中...」
-5. localStorage 快取 60 分鐘（未登入 API 每小時 60 次，工具數已接近上限）
+5. localStorage 快取 60 分鐘
 6. 無 token、無登入、無後端
+
+**為什麼不逐一查 repo**：未登入的 GitHub API 每小時每 IP 只有 60 次。43 個工具逐一查，一次冷載入就用掉 43 次，重新整理一次就全部變「無法讀取」。改成列表端點後，一次載入只花 1～2 次。
 
 ## 目前收錄工具 (43 個)
 

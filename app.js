@@ -166,24 +166,57 @@ async function fetchRepoStatus(tool){
     return data;
   }
 }
+// 一次抓回帳號下所有公開 repo：逐一查 43 個會直接打爆未登入的每小時 60 次額度
+async function fetchOwnerRepos(owner,now){
+  try{
+    const url = `https://api.github.com/users/${owner}/repos?per_page=100&sort=pushed`;
+    const res = await fetch(url,{headers:{"Accept":"application/vnd.github.v3+json"}});
+    if(!res.ok) return null;
+    const list = await res.json();
+    if(!Array.isArray(list)) return null;
+    const map = new Map();
+    const cache = loadCache();
+    for(const raw of list){
+      if(!raw||typeof raw.name!=="string") continue;
+      const data = normalizeRepoData(raw,now);
+      if(!data) continue;
+      map.set(raw.name.toLowerCase(),data);
+      cache[`${owner}/${raw.name}`]={data,timestamp:now};
+    }
+    saveCache(cache);
+    return map;
+  }catch{return null;}
+}
 async function fetchAllStatuses(){
-  let completed=0;
-  const total=tools.length;
-  githubHint.textContent=`讀取中 0/${total}`;
-  const promises = tools.map((tool,idx)=>new Promise(async(resolve)=>{
-    await new Promise(r=>setTimeout(r,idx*180));
-    const data = await fetchRepoStatus(tool);
-    completed++;
-    githubHint.textContent=`已讀取 ${completed}/${total}`;
-    if(completed===total){
-      const failed=[...githubDataMap.values()].filter(d=>d.error).length;
-      githubHint.textContent=failed?`完成 ${total-failed}/${total} 成功，${failed} 無法讀取`:`完成 ${total} 個`;
-      setTimeout(()=>{githubHint.textContent=`快取 60 分鐘`;},3000);
+  const now = Date.now();
+  const total = tools.length;
+  githubHint.textContent="讀取中...";
+  const cache = loadCache();
+  const pending = tools.filter(t=>{
+    const cached = readCachedRepo(cache,`${t.owner}/${t.repo}`,now);
+    if(cached){githubDataMap.set(t.repo,cached);return false;}
+    return true;
+  });
+  renderTools();
+  const owners = [...new Set(pending.map(t=>t.owner))];
+  for(const owner of owners){
+    const ownerTools = pending.filter(t=>t.owner===owner);
+    // 單一 repo 直接查，多個才值得整批列出
+    if(ownerTools.length===1){
+      await fetchRepoStatus(ownerTools[0]);
+    }else{
+      const map = await fetchOwnerRepos(owner,now);
+      ownerTools.forEach(t=>{
+        const data = map?.get(t.repo.toLowerCase());
+        githubDataMap.set(t.repo,data??{error:true,repoKey:`${owner}/${t.repo}`});
+      });
     }
     renderTools();
-    resolve(data);
-  }));
-  await Promise.allSettled(promises);
+  }
+  const failed=[...githubDataMap.values()].filter(d=>d.error).length;
+  githubHint.textContent=failed?`完成 ${total-failed}/${total} 成功，${failed} 無法讀取`:`完成 ${total} 個`;
+  setTimeout(()=>{githubHint.textContent=`快取 60 分鐘`;},3000);
+  renderTools();
 }
 function el(tag,className,text){
   const node=document.createElement(tag);
