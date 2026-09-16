@@ -1,0 +1,30 @@
+# Local development artifacts for the Scrapling collector.
+# Scoped to this sub-project so it can be merged or reverted on its own.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Acquisition output is a runtime artifact, never source. Raw HTML and
+# normalized JSON stay on the machine that fetched them.
+output/
+*.sqlite
+*.db
+
+# Scrapling's adaptive element storage is local state, not source.
+elements_storage.db
+
+# Never commit credentials, cookies or browser state.
+.env
+.env.*
+*.cookies
+*.cookies.json
+cookies.txt
+user-data-dir/
+browser-profile/
