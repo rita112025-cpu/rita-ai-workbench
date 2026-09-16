@@ -6,7 +6,7 @@
 
 ## 功能
 
-- 工具分類：常用 Prompt / Codex 工具 / Claude Code 分工 / 工作自動化工具 / 工程 / 報價工具 / 學習與資源
+- 工具分類：常用 Prompt / Codex 工具 / Claude Code 分工 / 工作自動化工具 / AI 實驗 / Demo / 工程 / 報價工具 / 學習與資源
 - 分類篩選：點分類只看該分類
 - **GitHub 更新狀態**：每張卡片自動顯示最後 Push、Open Issues、更新狀態（近期有更新 / 穩定 / 久未更新 / 無法讀取）
 - GitHub 狀態篩選：可依更新狀態篩選
@@ -45,16 +45,17 @@ https://api.github.com/repos/rita112025-cpu/{repo-name}
 5. localStorage 快取 15 分鐘
 6. 無 token、無登入、無後端
 
-## 第一版包含工具 (19 個)
+## 目前收錄工具 (24 個)
 
 常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck
 Codex 工具：codex-skills-hub, local-workspace-mcp（upstream：arumwu/local-workspace-mcp，Alpha／研究中）
-Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly
+Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly, Six-Skills-Dashboard
 工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner
+AI 實驗 / Demo：zsgc-store, TradingAgents（fork，研究用）, LongCat-Avatar-Cloud
 工程 / 報價：taiwan-construction-quote-tools (實際 repo: construction-quote-tools), tw-construction-quote-parser, boq-quote-cleaner
-學習與資源：revit-low-voltage-learning-guide, revit-weak-guide, astra-3d-resource-hub, taiwan-learning-hub, stock-prompt-lab
+學習與資源：revit-low-voltage-learning-guide, revit-low-voltage-learning-guide-Literary-Edition, revit-weak-guide, astra-3d-resource-hub, taiwan-learning-hub, stock-prompt-lab
 
-**第一版刻意未放入**：fables-agent-battle, stock, verus, venus, tainan-trip, japan_travel, japan_travel_meta, i-have-adhd, mep-boq-toolkit 等
+**尚未放入**：fable5-agent-battle, stock, verus, tainan-trip, japan_travel, japan_travel_meta, i-have-adhd, mep-boq-toolkit, work-prompts, vibe-coding-work-db, rita-codex-skills, ai-web-design-cheatsheet, markdown-upgrade-guide, dsh-starter, fullstack-blueprint, ai-resource-hub, yijing, stock_public, gods-eye-view 等
 
 ## 本機開啟
 
