@@ -250,17 +250,19 @@ function el(tag,className,text){
   return node;
 }
 function renderStats(){
-  const counts={};
-  categories.forEach(c=>counts[c]=tools.filter(t=>t.category===c).length);
-  const statItem=(label,value,className)=>{
-    const item=el("div",className);
-    item.append(el("div","label",label),el("div","value",value));
+  const recent=tools.filter(t=>getGithubActivity(githubDataMap.get(t.repo))==="近期有更新").length;
+  const statItem=(label,value)=>{
+    const item=el("div","stat-item");
+    item.append(el("div","value",value),el("div","label",label));
     return item;
   };
-  statsRow.replaceChildren(...categories.map(c=>statItem(c,counts[c],"stat-item")),statItem("總工具數",tools.length,"stat-item stat-total"));
+  const heroTotal=document.getElementById("heroTotal");
+  if(heroTotal) heroTotal.textContent=String(tools.length);
+  statsRow.replaceChildren(statItem("收錄工具",tools.length),statItem("工具分類",categories.length),statItem("30 天內更新",recent));
 }
-function createFilterButton(label,active,dataKey,onClick){
+function createFilterButton(label,active,dataKey,onClick,count){
   const btn=el("button",active?"filter-btn active":"filter-btn",label);
+  if(count!==undefined) btn.append(el("span","count",count));
   btn.dataset[dataKey]=label;
   btn.addEventListener("click",onClick);
   return btn;
@@ -271,7 +273,7 @@ function renderFilters(){
     activeCategory=c;
     renderFilters();
     renderTools();
-  })));
+  },c==="全部"?tools.length:tools.filter(t=>t.category===c).length)));
 }
 function renderGithubFilters(){
   githubFilterRow.replaceChildren(...githubStatusOptions.map(s=>createFilterButton(s,s===activeGithubStatus,"gh",()=>{
@@ -311,7 +313,7 @@ function createGithubStatus(t,gh){
     return box;
   }
   const activity=getGithubActivity(gh);
-  box.append(createGithubLine("更新狀態",activity,`activity-${activity}`),createGithubLine("最後 Push",formatDate(gh.pushed_at)),createGithubLine("Open Issues",gh.open_issues_count));
+  box.append(createGithubLine("更新狀態",activity,`activity-${activity}`),createGithubLine("最後 Push",formatDate(gh.pushed_at)),createGithubLine("Issues",gh.open_issues_count));
   return box;
 }
 function createLinkButton(className,href,label){
@@ -321,15 +323,23 @@ function createLinkButton(className,href,label){
   link.rel="noopener";
   return link;
 }
-function createToolCard(t){
-  const card=el("div","card");
+function createGithubCta(href){
+  const link=createLinkButton("cta",href,"");
+  link.setAttribute("aria-label","GitHub");
+  link.append(el("span","cta-pill","GitHub"),el("span","cta-neck"),el("span","cta-dot","→"));
+  return link;
+}
+// 9 格循環在 3 欄時會錯開成對角線，相鄰卡片不會同色
+const CARD_COLORS=["orange","yellow","white","white","orange","yellow","yellow","white","orange"];
+function createToolCard(t,i){
+  const card=el("div",`card card-${CARD_COLORS[i%CARD_COLORS.length]}`);
   const top=el("div","card-top");
   top.append(el("span","card-category",t.category),el("span",`status status-${t.status}`,t.status));
   const tags=el("div","tags");
   tags.append(...t.tags.map(tag=>el("span","tag",tag)));
   const actions=el("div","card-actions");
-  actions.append(createLinkButton("btn btn-github",t.github,"GitHub"));
-  if(t.demo) actions.append(createLinkButton("btn btn-demo",t.demo,"Demo"));
+  actions.append(createGithubCta(t.github));
+  if(t.demo) actions.append(createLinkButton("btn-demo",t.demo,"Demo ↗"));
   card.append(top,el("h3","",t.name),el("div","purpose",t.description),el("div","detail",t.detail),tags,createGithubStatus(t,githubDataMap.get(t.repo)),actions);
   return card;
 }
@@ -341,6 +351,7 @@ function renderTools(){
     grid.replaceChildren(el("div","empty","沒有符合條件的工具，試試其他關鍵字或分類"));
     return;
   }
+  renderStats();
   grid.replaceChildren(...filtered.map(createToolCard));
 }
 searchInput.addEventListener("input",renderTools);
