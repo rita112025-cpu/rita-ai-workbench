@@ -1,0 +1,24 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "reason": "品牌 hero 標章，為 bento 視覺系統的一部分，刻意保留"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "reason": "品牌暖色系底色 #ECE9E2，與深色主題搭配，刻意保留的視覺系統"
+      }
+    ]
+  }
+}
