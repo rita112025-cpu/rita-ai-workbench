@@ -52,17 +52,17 @@ https://api.github.com/repos/{owner}/{repo-name}
 
 **為什麼不逐一查 repo**：未登入的 GitHub API 每小時每 IP 只有 60 次。68 個工具逐一查，一次冷載入就用掉 68 次（超過上限），重新整理一次就全部變「無法讀取」。改成列表端點後，一次載入只花 1～2 次。
 
-## 目前收錄工具 (68 個)
+## 目前收錄工具 (78 個)
 
 常用 Prompt：PROMPT-LIBRARY, gpt6-astra-prompts, ai-prompt-deck, work-prompts, ai-web-design-cheatsheet, chatgpt-cheatsheet-zh-TW, awesome-gpt-image-2（fork）
 Codex 工具：codex-skills-hub, local-workspace-mcp（upstream：arumwu/local-workspace-mcp，Alpha／研究中）, rita-codex-skills, vibe-coding-work-db, dsh-starter, local-notebook, openchatx-mcp（fork）, open-code-review（fork）
-Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly, agent-skills-dashboard, i-have-adhd（fork）, fable5-agent-battle
-工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner, evidence-ingestion-final-bilingual, evidence-first-document-review
-AI 實驗 / Demo：zsgc-store, TradingAgents（fork）, LongCat-Avatar-Cloud, gods-eye-view（fork）, Prd-Governance, rita-ai-workbench-cli-edition
+Claude Code 分工：claude-dual-session-prompts, claude-skill-deck, claude-guide-presbyopia-friendly (實際 repo: Claude-Guide-Presbyopia-Friendly), agent-skills-dashboard, i-have-adhd（fork）, fable5-agent-battle
+工作自動化：daily-report-viewer, line-summary-docx, subtitle_burner, evidence-ingestion-final-bilingual, evidence-first-document-review, rita-ai-workbench, aurora-shiftlog-web
+AI 實驗 / Demo：zsgc-store, TradingAgents（fork）, LongCat-Avatar-Cloud, gods-eye-view（fork）, Prd-Governance, rita-ai-workbench-cli-edition, Hyperforge, Meitu_Xiuxiu, coffe_shop, STAR-WARS-STRIKE
 工程 / 報價工具：taiwan-construction-quote-tools (實際 repo: construction-quote-tools), tw-construction-quote-parser, boq-quote-cleaner, mep-boq-toolkit
-SCADA / CAD 工程：scada-evidence-site, evidence-first, scada-revit-guide, navisworks-scada-routing-guide, ct-expansion-guide, cable-tray-designer, cable-tray-dynamic-block, cable-tray-router, autocad-router-diagnostics, dwg_batch_tool
+SCADA / CAD 工程：scada-evidence-site, evidence-first, scada-revit-guide, navisworks-scada-routing-guide, ct-expansion-guide, cable-tray-designer, cable-tray-dynamic-block, cable-tray-router, autocad-router-diagnostics, dwg_batch_tool, MEP_tray, Engineering_Route_Inspector
 學習與資源：revit-low-voltage-learning-guide, revit-low-voltage-learning-guide-Literary-Edition, revit-weak-guide, astra-3d-resource-hub, taiwan-learning-hub, stock-prompt-lab, stock_public, ai-resource-hub, fullstack-blueprint, markdown-upgrade-guide, Ssdc-Glossary-V5-Final-Unfrozen_-, talkflow-speaking, free-ai-learning-roadmap-tw, ai-dev-repo-directory, vibe-coding-vault, ai-coding-welfare（fork）
-生活 / 其他：tainan-trip, tainan-trip_meta, japan_travel, japan_travel_meta, yijing, curated-internet-explorer
+生活 / 其他：tainan-trip, tainan-trip_meta, japan_travel, japan_travel_meta, yijing, curated-internet-explorer, neon-serpent, Pomodoro_Timer
 
 **未收錄**：private repo（stock, verus, ssdc-glossary, pm-tracker-v7, segreene-ai-pilot）與本站自身 rita-ai-workbench
 
