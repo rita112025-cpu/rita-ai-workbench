@@ -89,6 +89,7 @@ const tools = [
   {name:"aurora-shiftlog-web",repo:"aurora-shiftlog-web",owner:"rita112025-cpu",category:"工作自動化工具",description:"SCADA 工程師工時與任務儀表板。",detail:"Aurora ShiftLog Pro 是給 SCADA／系統整合工程師使用的現代化工時與任務紀錄 Web 應用。",tags:["SCADA","工時","任務管理"],status:"可用",github:"https://github.com/rita112025-cpu/aurora-shiftlog-web",demo:""},
   {name:"Transcript_translation",repo:"Transcript_translation",owner:"rita112025-cpu",category:"工作自動化工具",description:"繁中會議錄音轉逐字稿。",detail:"上傳音訊後切段辨識，匯出 TXT／SRT／VTT／JSON。React + Vite 前端、FastAPI 後端，語音辨識走 NVIDIA NIM。雲端模式預設停用，本地模式需自架 NIM 服務；尚未以真實模型驗證辨識品質。",tags:["逐字稿","語音辨識","FastAPI"],status:"整理中",github:"https://github.com/rita112025-cpu/Transcript_translation",demo:""},
   {name:"repo-guard",repo:"repo-guard",owner:"rita112025-cpu",category:"工作自動化工具",description:"Git 推送前資料外洩檢查工具。",detail:"在 commit／push 前擋下 Excel、報價資料、金鑰與個資。純 Python 標準函式庫，唯讀、不連網。",tags:["資安","Git Hook","Python"],status:"可用",github:"https://github.com/rita112025-cpu/repo-guard",demo:""},
+  {name:"Big-Mission",repo:"Big-Mission",owner:"rita112025-cpu",category:"工作自動化工具",description:"Windows 自動化任務中控台。",detail:"FastAPI + React / TypeScript + SQLite 的單機本機程式執行器，可排程執行 Python、PowerShell、BAT/CMD 與 HTTP GET 任務；僅限本機 127.0.0.1 使用，Windows 真機驗收仍需人工確認。",tags:["自動化","排程","Windows","FastAPI"],status:"整理中",github:"https://github.com/rita112025-cpu/Big-Mission",demo:""},
 ];
 const categories = ["常用 Prompt","Codex 工具","Claude Code 分工","工作自動化工具","AI 實驗 / Demo","工程 / 報價工具","SCADA / CAD 工程","學習與資源","生活 / 其他"];
 const githubStatusOptions = ["全部狀態","近期有更新","穩定","久未更新","無法讀取","讀取中"];
