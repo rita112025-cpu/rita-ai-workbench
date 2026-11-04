@@ -50,7 +50,7 @@ https://api.github.com/repos/{owner}/{repo-name}
 5. localStorage 快取 60 分鐘
 6. 無 token、無登入、無後端
 
-**為什麼不逐一查 repo**：未登入的 GitHub API 每小時每 IP 只有 60 次。68 個工具逐一查，一次冷載入就用掉 68 次（超過上限），重新整理一次就全部變「無法讀取」。改成列表端點後，一次載入只花 1～2 次。
+**為什麼不逐一查 repo**：未登入的 GitHub API 每小時每 IP 只有 60 次。90 個工具逐一查，一次冷載入就用掉 90 次（超過上限），重新整理一次就全部變「無法讀取」。改成列表端點後，一次載入只花 1～2 次。
 
 ## 目前收錄工具 (90 個)
 
@@ -122,4 +122,4 @@ git push -u origin main
 ## 重要
 
 - `Rita-Ai-V1.html` 為 React 預覽展示頁，含 `rita-ai-lab` 測試帳號與非正式工具，不列入正式 v1，請勿推送
-- 正式版無 Google Fonts，無外部依賴，帳號皆為 `rita112025-cpu`
+- 頁面透過 `index.html` 載入 Google Fonts（`fonts.googleapis.com`、`fonts.gstatic.com`），並呼叫 GitHub API 取得更新狀態；除此之外沒有其他外部依賴。帳號皆為 `rita112025-cpu`
